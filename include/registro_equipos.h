@@ -31,3 +31,51 @@ inline bool nombreValido(const std::string& nombre, std::string& motivo) {
     }
     return true;
 }
+// Busca si ya hay un equipo con ese nombre, sin distinguir mayusculas.
+// Recibe: el arreglo y el total como const, porque solo se leen.
+// Devuelve: true si el nombre ya esta registrado.
+inline bool nombreRepetido(const Equipo equipos[], int total,
+                           const std::string& nombre) {
+    for (int i = 0; i < total; i++) {
+        if (mismoTexto(equipos[i].nombre, nombre)) {
+            return true;
+        }
+    }
+    return false;
+}
+// Revisa si una abreviatura ya la usa algun equipo registrado.
+inline bool abreviaturaUsada(const Equipo equipos[], int total,
+                             const std::string& abreviatura) {
+    for (int i = 0; i < total; i++) {
+        if (equipos[i].abreviatura == abreviatura) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Calcula una abreviatura de CARACTERES_ABREVIATURA letras que no se repita.
+// Ejemplo: Pumas -> PUM; Pelicanos (si PEL existe) -> PEI.
+inline std::string generarAbreviatura(const Equipo equipos[], int total,
+                                      const std::string& nombre) {
+    std::string mayus = aMayusculas(nombre);
+    std::string base = mayus.substr(0, CARACTERES_ABREVIATURA);
+    if (!abreviaturaUsada(equipos, total, base)) {
+        return base;
+    }
+
+    std::string prefijo = mayus.substr(0, CARACTERES_ABREVIATURA - 1);
+    for (std::size_t i = CARACTERES_ABREVIATURA; i < mayus.size(); i++) {
+        std::string candidata = prefijo + mayus[i];
+        if (!abreviaturaUsada(equipos, total, candidata)) {
+            return candidata;
+        }
+    }
+    for (char letra = 'A'; letra <= 'Z'; letra++) {
+        std::string candidata = prefijo + letra;
+        if (!abreviaturaUsada(equipos, total, candidata)) {
+            return candidata;
+        }
+    }
+    return base;  // no se alcanza: hay mas candidatas que equipos
+}
