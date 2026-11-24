@@ -36,6 +36,41 @@ const int PUNTOS_DERROTA = 0;
 
 // ---------- Registros (equipo) ----------
 // Escriban aqui los struct del torneo.
+#include <string>
+#include <cctype>
 
+struct Equipo {
+    std::string nombre;
+    std::string abreviatura;
+    int jugados = 0;
+    int ganados = 0;
+    int empatados = 0;
+    int perdidos = 0;
+    int golesFavor = 0;
+    int golesContra = 0;
+    int puntos = 0;
+};
+
+struct Partido {
+    int local = 0;          // indice del equipo local en el arreglo
+    int visitante = 0;      // indice del equipo visitante
+    int golesLocal = 0;
+    int golesVisitante = 0;
+};
+
+// Convierte un texto a mayusculas (devuelve una copia).
+inline std::string aMayusculas(const std::string& texto) {
+    std::string resultado = texto;
+    for (std::size_t i = 0; i < resultado.size(); i++) {
+        resultado[i] = static_cast<char>(
+            std::toupper(static_cast<unsigned char>(resultado[i])));
+    }
+    return resultado;
+}
+
+// Compara dos textos sin distinguir mayusculas y minusculas.
+inline bool mismoTexto(const std::string& a, const std::string& b) {
+    return aMayusculas(a) == aMayusculas(b);
+}
 // ---------- Funciones comunes (equipo) ----------
 // Escriban aqui las funciones que varios modulos comparten.
