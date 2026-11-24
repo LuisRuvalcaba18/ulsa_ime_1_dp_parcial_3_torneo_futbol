@@ -74,3 +74,10 @@ inline void imprimirTitulo(const std::string& titulo) {
 inline bool juegaEnPartido(const Partido& partido, int indiceEquipo) {
     return partido.local == indiceEquipo || partido.visitante == indiceEquipo;
 }
+// Devuelve: los goles que anoto el equipo en ese partido.
+inline int golesDelEquipo(const Partido& partido, int indiceEquipo) {
+    if (partido.local == indiceEquipo) {
+        return partido.golesLocal;
+    }
+    return partido.golesVisitante;
+}
