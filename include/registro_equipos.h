@@ -113,3 +113,19 @@ inline bool registrarEquipo(Equipo equipos[], int& total) {
               << " (" << nuevo.abreviatura << ")\n";
     return true;
 }
+// Imprime la lista de equipos en orden de registro.
+// Recibe: el arreglo y el total como const, solo se leen.
+inline void mostrarEquipos(const Equipo equipos[], int total) {
+    if (total == 0) {
+        std::cout << "No hay equipos registrados.\n";
+        return;
+    }
+
+    std::cout << " EQUIPOS REGISTRADOS \n";
+    std::cout << std::left << std::setw(4) << "#"
+              << std::setw(17) << "EQUIPO" << "\n";
+    for (int i = 0; i < total; i++) {
+        std::cout << std::left << std::setw(4) << (i + 1)
+                  << std::setw(17) << equipos[i].nombre << "\n";
+    }
+}
