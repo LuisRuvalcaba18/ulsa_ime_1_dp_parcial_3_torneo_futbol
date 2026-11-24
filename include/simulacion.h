@@ -1,6 +1,6 @@
 #pragma once
 
-#include <isotream>
-#include <isomainp>
+#include <iostream>
+#include <isomanip>
 #include <string>
 #include "utilerias.h"
