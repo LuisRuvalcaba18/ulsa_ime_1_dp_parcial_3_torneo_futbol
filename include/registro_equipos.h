@@ -8,8 +8,7 @@
 
 // Revisa que el nombre tenga solo letras ASCII y digitos, y que mida
 // entre MIN_CARACTERES_NOMBRE y MAX_CARACTERES_NOMBRE.
-// Recibe: el nombre (const&, solo se lee) y 'motivo' (por referencia,
-//         aqui se escribe la razon del rechazo).
+// Recibe: el nombre (const&) y 'motivo' (por referencia, razon del rechazo).
 // Devuelve: true si el nombre es valido.
 inline bool nombreValido(const std::string& nombre, std::string& motivo) {
     for (std::size_t i = 0; i < nombre.size(); i++) {
@@ -31,9 +30,8 @@ inline bool nombreValido(const std::string& nombre, std::string& motivo) {
     }
     return true;
 }
+
 // Busca si ya hay un equipo con ese nombre, sin distinguir mayusculas.
-// Recibe: el arreglo y el total como const, porque solo se leen.
-// Devuelve: true si el nombre ya esta registrado.
 inline bool nombreRepetido(const Equipo equipos[], int total,
                            const std::string& nombre) {
     for (int i = 0; i < total; i++) {
@@ -43,6 +41,7 @@ inline bool nombreRepetido(const Equipo equipos[], int total,
     }
     return false;
 }
+
 // Revisa si una abreviatura ya la usa algun equipo registrado.
 inline bool abreviaturaUsada(const Equipo equipos[], int total,
                              const std::string& abreviatura) {
@@ -55,7 +54,6 @@ inline bool abreviaturaUsada(const Equipo equipos[], int total,
 }
 
 // Calcula una abreviatura de CARACTERES_ABREVIATURA letras que no se repita.
-// Ejemplo: Pumas -> PUM; Pelicanos (si PEL existe) -> PEI.
 inline std::string generarAbreviatura(const Equipo equipos[], int total,
                                       const std::string& nombre) {
     std::string mayus = aMayusculas(nombre);
@@ -77,8 +75,9 @@ inline std::string generarAbreviatura(const Equipo equipos[], int total,
             return candidata;
         }
     }
-    return base;  // no se alcanza: hay mas candidatas que equipos
+    return base;
 }
+
 // Registra un equipo: rechaza si la lista esta llena y pide el nombre
 // hasta que sea valido y no repetido.
 // Recibe: el arreglo (se modifica) y el total POR REFERENCIA (se incrementa).
@@ -103,7 +102,7 @@ inline bool registrarEquipo(Equipo equipos[], int& total) {
         }
     }
 
-    Equipo nuevo;  // las estadisticas inician en 0 por el struct
+    Equipo nuevo;
     nuevo.nombre = nombre;
     nuevo.abreviatura = generarAbreviatura(equipos, total, nombre);
     equipos[total] = nuevo;
@@ -113,15 +112,15 @@ inline bool registrarEquipo(Equipo equipos[], int& total) {
               << " (" << nuevo.abreviatura << ")\n";
     return true;
 }
+
 // Imprime la lista de equipos en orden de registro.
-// Recibe: el arreglo y el total como const, solo se leen.
 inline void mostrarEquipos(const Equipo equipos[], int total) {
     if (total == 0) {
         std::cout << "No hay equipos registrados.\n";
         return;
     }
 
-    std::cout << " EQUIPOS REGISTRADOS \n";
+    std::cout << "--- EQUIPOS REGISTRADOS ---\n";
     std::cout << std::left << std::setw(4) << "#"
               << std::setw(17) << "EQUIPO" << "\n";
     for (int i = 0; i < total; i++) {
