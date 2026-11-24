@@ -16,7 +16,13 @@ const int CARACTERES_ABREVIATURA = 3;
 const int PUNTOS_VICTORIA = 3;
 const int PUNTOS_EMPATE = 1;
 const int PUNTOS_DERROTA = 0;
-
+const int ANCHO_NUMERO = 4;       
+const int ANCHO_POSICION = 5;     
+const int ANCHO_NOMBRE = 17;     
+const int ANCHO_MARCADOR = 10;    
+const int ANCHO_ESTADISTICA = 4;  
+const int ANCHO_PUNTOS = 5;       
+const int ANCHO_CELDA = 6;        
 // ---------- Registros ----------
 struct Equipo {
     std::string nombre;
