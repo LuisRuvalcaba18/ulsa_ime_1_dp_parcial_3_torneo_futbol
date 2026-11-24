@@ -59,3 +59,7 @@ inline std::string aMayusculas(const std::string& texto) {
 inline bool mismoTexto(const std::string& a, const std::string& b) {
     return aMayusculas(a) == aMayusculas(b);
 }
+
+inline std::string textoMarcador(int golesPrimero, int golesSegundo) {
+    return std::to_string(golesPrimero) + " - " + std::to_string(golesSegundo);
+}
