@@ -79,3 +79,37 @@ inline std::string generarAbreviatura(const Equipo equipos[], int total,
     }
     return base;  // no se alcanza: hay mas candidatas que equipos
 }
+// Registra un equipo: rechaza si la lista esta llena y pide el nombre
+// hasta que sea valido y no repetido.
+// Recibe: el arreglo (se modifica) y el total POR REFERENCIA (se incrementa).
+// Devuelve: true si se registro, false si la lista estaba llena.
+inline bool registrarEquipo(Equipo equipos[], int& total) {
+    if (total >= MAX_EQUIPOS) {
+        std::cout << "Lista llena: ya hay " << MAX_EQUIPOS
+                  << " equipos registrados.\n";
+        return false;
+    }
+
+    std::string nombre;
+    std::string motivo;
+    while (true) {
+        nombre = leerCadena("Nombre del equipo " + std::to_string(total + 1) + ": ");
+        if (!nombreValido(nombre, motivo)) {
+            std::cout << "Nombre rechazado: " << motivo << "\n";
+        } else if (nombreRepetido(equipos, total, nombre)) {
+            std::cout << "Nombre rechazado: ya existe un equipo con ese nombre.\n";
+        } else {
+            break;
+        }
+    }
+
+    Equipo nuevo;  // las estadisticas inician en 0 por el struct
+    nuevo.nombre = nombre;
+    nuevo.abreviatura = generarAbreviatura(equipos, total, nombre);
+    equipos[total] = nuevo;
+    total++;
+
+    std::cout << "Equipo registrado: " << nuevo.nombre
+              << " (" << nuevo.abreviatura << ")\n";
+    return true;
+}
