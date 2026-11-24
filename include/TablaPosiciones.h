@@ -19,3 +19,22 @@ inline void reiniciarEstadisticas(Equipo& equipo) {
     equipo.golesContra = 0;
     equipo.puntos = 0;
 }
+// Operacion "registrar resultado" del TDA Equipo.
+// Suma un partido jugado, los goles y los puntos que le tocan.
+// Recibe: el equipo POR REFERENCIA (se modifica) y los goles por valor.
+inline void registrarResultado(Equipo& equipo, int golesFavor, int golesContra) {
+    equipo.jugados++;
+    equipo.golesFavor += golesFavor;
+    equipo.golesContra += golesContra;
+
+    if (golesFavor > golesContra) {
+        equipo.ganados++;
+        equipo.puntos += PUNTOS_VICTORIA;
+    } else if (golesFavor == golesContra) {
+        equipo.empatados++;
+        equipo.puntos += PUNTOS_EMPATE;
+    } else {
+        equipo.perdidos++;
+        equipo.puntos += PUNTOS_DERROTA;
+    }
+}
