@@ -1,0 +1,83 @@
+# Propuesta de mejora
+
+<!--
+Esta es una plantilla. NO la modifiques.
+Cópiala a docs/mejoras/<matrícula>/mejora.md (por ejemplo, docs/mejoras/123456/mejora.md)
+y llena tu copia.
+
+La propuesta es solo diseño: no se programa.
+Puede tocar cualquier parte de la solución del equipo y se resuelve con los temas del parcial.
+Dentro de un equipo no puede haber dos propuestas iguales.
+-->
+
+Propuesta de mejora elaborada por: [Manuel Mona Pérez]
+
+**Matrícula:** [26334]  
+**Título de la propuesta:** [Tabla de posiciones automática]
+
+## 1. Impacto
+
+¿Es una mejora o una corrección? ¿Qué problema resuelve o qué agrega, y a quién beneficia?
+
+[La propuesta consiste en mejorar el sistema para que la tabla de posiciones se actualice automáticamente después de simular los partidos. Esto facilitaría consultar la posición de cada equipo y evitaría tener que calcular manualmente los puntos, partidos jugados, ganados, empatados, perdidos y diferencia de goles.
+
+La mejora beneficia a los usuarios del sistema porque permite obtener una clasificación más rápida, clara y ordenada después de cada torneo.]
+
+## 2. Qué implica en el diseño
+
+¿Qué partes de la solución cambian (registros, arreglos, constantes, funciones, menú)? Justifica cada cambio.
+
+[Se necesitaría organizar la información de cada equipo mediante los datos necesarios para calcular su clasificación, como puntos, partidos jugados, victorias, empates, derrotas, goles a favor y goles en contra.
+
+También sería necesario incorporar una función encargada de calcular y ordenar la tabla de posiciones utilizando los resultados de los partidos. El menú del programa podría incluir una opción para consultar la clasificación una vez terminada la simulación.]
+
+## 3. Receta
+
+Receta en pseudocódigo de la solución con tu propuesta. Marca cada paso nuevo con `[NUEVO]` y cada paso que cambia con `[CAMBIA]`. Los pasos sin marca son los que ya existen.
+
+```
+[INICIO
+
+Registrar los equipos del torneo.
+
+Simular los partidos del torneo.
+
+[NUEVO] Inicializar los datos de clasificación de cada equipo:
+        puntos = 0
+        partidosJugados = 0
+        victorias = 0
+        empates = 0
+        derrotas = 0
+        golesFavor = 0
+        golesContra = 0
+
+[NUEVO] Recorrer todos los partidos simulados.
+
+[NUEVO] Para cada partido:
+        Actualizar los partidos jugados de los dos equipos.
+        Actualizar los goles a favor y en contra.
+
+        [NUEVO] Si el equipo local gana:
+                Sumar 3 puntos al equipo local.
+                Aumentar sus victorias.
+                Aumentar las derrotas del equipo visitante.
+
+        [NUEVO] Si el partido termina empatado:
+                Sumar 1 punto a cada equipo.
+                Aumentar los empates de ambos equipos.
+
+        [NUEVO] Si el equipo visitante gana:
+                Sumar 3 puntos al equipo visitante.
+                Aumentar sus victorias.
+                Aumentar las derrotas del equipo local.
+
+[NUEVO] Calcular la diferencia de goles de cada equipo.
+
+[CAMBIA] Ordenar los equipos de acuerdo con los puntos obtenidos y los criterios de clasificación.
+
+[NUEVO] Mostrar la tabla de posiciones ordenada.
+
+Mostrar los resultados del torneo.
+
+FIN]
+```
