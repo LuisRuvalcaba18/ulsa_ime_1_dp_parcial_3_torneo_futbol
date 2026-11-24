@@ -63,6 +63,7 @@ inline bool mismoTexto(const std::string& a, const std::string& b) {
 inline std::string textoMarcador(int golesPrimero, int golesSegundo) {
     return std::to_string(golesPrimero) + " - " + std::to_string(golesSegundo);
 }
+
 inline void imprimirTitulo(const std::string& titulo) {
     std::cout << "--- " << titulo << " ---\n";
 }
