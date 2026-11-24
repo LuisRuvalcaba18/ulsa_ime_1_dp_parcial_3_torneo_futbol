@@ -3,7 +3,7 @@
 // =====================================================
 // BASE COMUN DEL PROYECTO (bloque 0, de todo el equipo)
 // =====================================================
-
+#include <iostream>
 #include <string>
 #include <cctype>
 
