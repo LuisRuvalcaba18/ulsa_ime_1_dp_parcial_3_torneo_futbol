@@ -67,9 +67,6 @@ inline std::string textoMarcador(int golesPrimero, int golesSegundo) {
 inline void imprimirTitulo(const std::string& titulo) {
     std::cout << "--- " << titulo << " ---\n";
 }
-// ---------- Operaciones del TDA Partido ----------
-// Reciben el partido como const& (solo se lee) y el indice de un
-// equipo en el arreglo de equipos.
 
 // Devuelve: true si el equipo jugo ese partido.
 inline bool juegaEnPartido(const Partido& partido, int indiceEquipo) {
