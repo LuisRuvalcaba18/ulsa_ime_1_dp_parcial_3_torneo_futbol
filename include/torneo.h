@@ -81,3 +81,10 @@ inline int golesDelEquipo(const Partido& partido, int indiceEquipo) {
     }
     return partido.golesVisitante;
 }
+// Devuelve: los goles que recibio el equipo en ese partido.
+inline int golesDelRival(const Partido& partido, int indiceEquipo) {
+    if (partido.local == indiceEquipo) {
+        return partido.golesVisitante;
+    }
+    return partido.golesLocal;
+}
