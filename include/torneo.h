@@ -70,10 +70,12 @@ inline void imprimirTitulo(const std::string& titulo) {
 // ---------- Operaciones del TDA Partido ----------
 // Reciben el partido como const& (solo se lee) y el indice de un
 // equipo en el arreglo de equipos.
+
 // Devuelve: true si el equipo jugo ese partido.
 inline bool juegaEnPartido(const Partido& partido, int indiceEquipo) {
     return partido.local == indiceEquipo || partido.visitante == indiceEquipo;
 }
+
 // Devuelve: los goles que anoto el equipo en ese partido.
 inline int golesDelEquipo(const Partido& partido, int indiceEquipo) {
     if (partido.local == indiceEquipo) {
@@ -81,6 +83,7 @@ inline int golesDelEquipo(const Partido& partido, int indiceEquipo) {
     }
     return partido.golesVisitante;
 }
+
 // Devuelve: los goles que recibio el equipo en ese partido.
 inline int golesDelRival(const Partido& partido, int indiceEquipo) {
     if (partido.local == indiceEquipo) {
@@ -88,6 +91,7 @@ inline int golesDelRival(const Partido& partido, int indiceEquipo) {
     }
     return partido.golesLocal;
 }
+
 // Devuelve: el indice del rival del equipo en ese partido.
 inline int rivalDe(const Partido& partido, int indiceEquipo) {
     if (partido.local == indiceEquipo) {
