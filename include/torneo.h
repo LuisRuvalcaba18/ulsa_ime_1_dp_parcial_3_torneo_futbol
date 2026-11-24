@@ -88,3 +88,10 @@ inline int golesDelRival(const Partido& partido, int indiceEquipo) {
     }
     return partido.golesLocal;
 }
+// Devuelve: el indice del rival del equipo en ese partido.
+inline int rivalDe(const Partido& partido, int indiceEquipo) {
+    if (partido.local == indiceEquipo) {
+        return partido.visitante;
+    }
+    return partido.local;
+}
