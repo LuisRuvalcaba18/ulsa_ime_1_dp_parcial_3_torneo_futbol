@@ -38,3 +38,24 @@ inline void registrarResultado(Equipo& equipo, int golesFavor, int golesContra) 
         equipo.puntos += PUNTOS_DERROTA;
     }
 }
+// Aplica un partido a sus dos equipos: cada uno ve el marcador
+// desde su lado.
+// Recibe: los dos equipos POR REFERENCIA y el partido como const&.
+inline void aplicarPartido(Equipo& local, Equipo& visitante,
+                           const Partido& partido) {
+    registrarResultado(local, partido.golesLocal, partido.golesVisitante);
+    registrarResultado(visitante, partido.golesVisitante, partido.golesLocal);
+}
+
+// Calcula la tabla completa: reinicia a todos y recorre los partidos.
+// Recibe: el arreglo de equipos (se modifica) y los partidos como const.
+inline void calcularTabla(Equipo equipos[], int totalEquipos,
+                          const Partido partidos[], int totalPartidos) {
+    for (int i = 0; i < totalEquipos; i++) {
+        reiniciarEstadisticas(equipos[i]);
+    }
+    for (int i = 0; i < totalPartidos; i++) {
+        const Partido& partido = partidos[i];
+        aplicarPartido(equipos[partido.local], equipos[partido.visitante], partido);
+    }
+}
