@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <isomanip>
+#include <iomanip>
 #include <string>
 #include "utilerias.h"
 #include "torneo.h"
