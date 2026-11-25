@@ -8,7 +8,7 @@
 | Modulo | Matricula | Nombre | Usuario de GitHub | Tema |
 | --- | --- | --- | --- | --- |
 | 1 | 26141 | Alan Rodrigo Guardiola Martinez | [Pendiente] | Registro de equipos |
-| 2 | [Pendiente] | [Pendiente] | [Pendiente] | Simulacion de partidos |
+| 2 | 26212 | Romeo Ramos Zertuche | romerz | Simulacion de partidos |
 | 3 | [Pendiente] | [Pendiente] | [Pendiente] | Tabla de posiciones |
 | 4 | [Pendiente] | [Pendiente] | [Pendiente] | Clasificacion y campeon |
 | 5 | [Pendiente] | [Pendiente] | [Pendiente] | Consultas |
@@ -184,7 +184,7 @@ FIN
 | Modulo | Documentacion | Propuesta de mejora |
 | --- | --- | --- |
 | 1 | [Pendiente: docs/26141/modulo.md] | [26141: propuesta](docs/mejoras/26141) |
-| 2 | [Pendiente] | [Pendiente] |
+| 2 | [26212: simulacion de partidos](docs/26212/modulo.md) | [26212: estadisticas del torneo](docs/mejoras/26212/mejora.md) |
 | 3 | [Pendiente] | [Pendiente] |
 | 4 | [Pendiente] | [Pendiente] |
 | 5 | [Pendiente] | [Pendiente] |
@@ -194,6 +194,7 @@ Las propuestas disponibles actualmente son:
 
 - [Alan Rodrigo Guardiola Martinez - propuesta 26141](docs/mejoras/26141)
 - [Manuel Mona Perez - tabla de posiciones automatica](docs/mejoras/26334)
+- [Romeo Ramos Zertuche - estadisticas generales del torneo](docs/mejoras/26212/mejora.md)
 
 ## 10. Cambios a la base comun
 
