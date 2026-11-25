@@ -77,3 +77,33 @@ inline bool simularTorneo(Partido partidos[], int& totalPartidos,
     std::cout << "Torneo simulado: se jugaron " << totalPartidos << " partidos.\n";
     return true;
 }
+
+// Imprime un renglon del reporte de resultados
+// Recibe el numero de partido, el partido como const& y los equipos
+//         como const, porque solo se leen.
+inline void imprimirPartido(int numero, const Partido& partido,
+                            const Equipo equipos[]) {
+    std::cout << std::left << std::setw(ANCHO_NUMERO) << numero
+              << std::setw(ANCHO_NOMBRE) << equipos[partido.local].nombre
+              << std::setw(ANCHO_MARCADOR)
+              << textoMarcador(partido.golesLocal, partido.golesVisitante)
+              << equipos[partido.visitante].nombre << "\n";
+}
+
+// Muestra los resultados de todos los partidos, en el orden en que se jugaron
+// Recibe: los arreglos como const solo se leen y si ya se simulo
+inline void mostrarResultados(const Equipo equipos[], const Partido partidos[],
+                              int totalPartidos, bool simulado) {
+    if (!reporteDisponible(simulado)) {
+        return;
+    }
+
+    imprimirTitulo("RESULTADOS DE LOS PARTIDOS");
+    std::cout << std::left << std::setw(ANCHO_NUMERO) << "#"
+              << std::setw(ANCHO_NOMBRE) << "LOCAL"
+              << std::setw(ANCHO_MARCADOR) << "MARCADOR"
+              << "VISITANTE" << "\n";
+    for (int i = 0; i < totalPartidos; i++) {
+        imprimirPartido(i + 1, partidos[i], equipos);
+    }
+}
