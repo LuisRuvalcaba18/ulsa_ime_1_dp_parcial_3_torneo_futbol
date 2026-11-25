@@ -1,0 +1,199 @@
+**# Documentación del módulo**
+
+**## 1. Autor**
+
+**Nombre:** Manuel Mona Pèrez
+**Matrícula:** 26334
+**Módulo:** Clasificación y campeón  
+**Archivo de código:** `include/clasificacion.h`
+
+**## 2. Propósito**
+
+Mi módulo se encarga de organizar la tabla de posiciones del torneo y determinar quién es el campeón. Para esto, toma los datos estadísticos de los 6 equipos y los acomoda de mayor a menor según los puntos que consiguieron durante los partidos. También muestra información como partidos jugados, ganados, empatados, perdidos, goles a favor, goles en contra y puntos.
+
+Cuando dos o más equipos terminan empatados en el primer lugar, el programa muestra sus nombres y permite que el usuario elija quién será el campeón.
+
+Al usuario le sirve porque puede consultar cómo quedó la clasificación después de los partidos y conocer al ganador del torneo. Además, el ordenamiento se realiza en una copia del arreglo de equipos, por lo que no se modifica la información original.
+
+El módulo solo permite mostrar la tabla y elegir al campeón cuando el torneo ya fue simulado.
+
+**## 3. Entradas y salidas**
+
+| Función | Recibe | Produce |
+| --- | --- | --- |
+| `intercambiarEquipos` | Dos apuntadores de tipo `Equipo*` | Intercambia los datos de los dos equipos utilizando una variable temporal. |
+| `ordenarTabla` | El arreglo de equipos, el total de equipos y otro arreglo llamado `tabla` | Copia los equipos, los ordena por puntos de mayor a menor y no modifica el arreglo original. |
+| `imprimirFilaTabla` | La posición y un equipo como `const&` | Imprime una fila con el nombre y las estadísticas del equipo. |
+| `mostrarTabla` | Los equipos como arreglo constante, el total y `simulado` | Muestra la tabla de posiciones o el mensaje de rechazo si todavía no se ha simulado. |
+| `buscarLideres` | La tabla ordenada, el total y un arreglo de apuntadores | Guarda las direcciones de los equipos que tienen los mismos puntos que el primer lugar y devuelve cuántos encontró. |
+| `elegirCampeon` | El arreglo de apuntadores de los líderes y la cantidad de equipos empatados | Muestra las opciones, valida la selección y devuelve un apuntador al campeón elegido. |
+| `mostrarCampeon` | Los equipos como arreglo constante, el total y `simulado` | Muestra el campeón y sus puntos, o permite elegirlo cuando existe un empate. |
+
+**## 4. Decisiones de diseño**
+
+**¿Qué funciones tiene tu módulo y qué tarea hace cada una?**
+
+- `intercambiarEquipos`: cambia de lugar dos registros de tipo `Equipo` utilizando apuntadores y una variable temporal para no perder la información.
+- `ordenarTabla`: primero copia los equipos originales y después los organiza de acuerdo con sus puntos utilizando el método burbuja.
+- `imprimirFilaTabla`: imprime los datos de un equipo en una fila, utilizando `setw` para mantener alineadas las columnas.
+- `mostrarTabla`: comprueba que el torneo ya esté simulado, ordena los equipos y presenta el reporte de posiciones.
+- `buscarLideres`: identifica cuáles equipos tienen la misma cantidad de puntos que el equipo que ocupa el primer lugar y guarda sus direcciones en un arreglo de apuntadores.
+- `elegirCampeon`: muestra los equipos empatados y solicita al usuario que seleccione uno. También verifica que la opción ingresada sea válida.
+- `mostrarCampeon`: prepara la clasificación, busca al equipo con más puntos y muestra su nombre y puntuación. Si hay empate, permite que el usuario decida quién gana.
+
+Separé las operaciones en distintas funciones para que cada una realice una tarea específica. Así el código queda más organizado y es más fácil encontrar errores o modificar alguna parte sin afectar las demás.
+
+**¿Qué estructuras de datos usa tu módulo (registros, arreglos, matrices o apuntadores), por qué las elegiste y cómo pasas los datos a cada función (por valor, por referencia, como arreglo o con un apuntador)?**
+
+- **Registro `Equipo`:** contiene la información de cada participante, como su nombre, partidos jugados, victorias, empates, derrotas, goles y puntos. Lo utilizo para tener todos los datos de cada equipo agrupados.
+- **Arreglo de equipos:** contiene los equipos registrados en el torneo. Se utiliza como información de entrada para generar la tabla de posiciones.
+- **Arreglo `Equipo tabla[MAX_EQUIPOS]`:** se utiliza para guardar una copia de los equipos y ordenarlos sin cambiar el arreglo original.
+- **Arreglo de apuntadores `const Equipo* lideres[]`:** almacena las direcciones de los equipos que comparten el primer lugar. Lo utilizo para identificar a los posibles campeones sin duplicar sus registros.
+- **Por apuntador:** en `intercambiarEquipos` recibo dos apuntadores `Equipo*`, porque necesito modificar los registros originales. También utilizo apuntadores constantes en `buscarLideres` y `elegirCampeon` para acceder a los equipos empatados.
+- **Por valor:** envío datos como `total`, `posicion` y `cantidad`, porque solamente necesito consultar sus valores.
+- **Por referencia:** en `imprimirFilaTabla` utilizo `const Equipo&` para recibir el registro sin hacer una copia y evitar que se modifiquen sus datos.
+- **Como arreglo constante:** en `ordenarTabla`, `mostrarTabla` y `mostrarCampeon` recibo los equipos como arreglos que solamente se consultan, ya que no necesito cambiar sus valores originales.
+
+**¿Dónde demuestras los temas asignados a tu módulo?**
+
+- **Registros:** se utilizan en las funciones de clasificación para consultar, copiar e intercambiar los datos de cada equipo. En `intercambiarEquipos` se utiliza un registro temporal para realizar el intercambio.
+- **Arreglos:** aparecen en `ordenarTabla`, donde se copian los equipos al arreglo `tabla`. También se utilizan para guardar los apuntadores de los equipos empatados en el primer lugar.
+- **Apuntadores:** se demuestran en `intercambiarEquipos`, donde utilizo `Equipo*` para modificar directamente los registros. También aparecen en `buscarLideres`, donde guardo las direcciones de los equipos que tienen los mismos puntos.
+- **Ciclos anidados:** se utilizan en `ordenarTabla` para implementar el método burbuja. El ciclo exterior controla las pasadas y el interior compara los puntos de dos equipos consecutivos para decidir si deben intercambiarse.
+- **Condicionales:** se utilizan para comparar los puntos, detectar empates, comprobar si existe una simulación y validar la opción que selecciona el usuario.
+
+**¿Qué ciclos usaste y por qué esos?**
+
+- **`for` anidados** en `ordenarTabla`, porque necesito recorrer varias veces el arreglo y comparar los puntos de los equipos para acomodarlos correctamente.
+- **`for`** en `mostrarTabla`, para recorrer los equipos ordenados e imprimir cada posición.
+- **`for`** en `buscarLideres`, para revisar desde el primer equipo hasta encontrar uno que tenga menos puntos que el líder.
+- **`for`** en `elegirCampeon`, para mostrar todas las opciones de los equipos que están empatados.
+- **`while`** en `elegirCampeon`, porque no sé cuántas veces el usuario puede ingresar una opción incorrecta. Se repite hasta que seleccione un número válido.
+
+**¿Qué constantes usaste y por qué son constantes?**
+
+- Mía: `PRIMERA_OPCION = 1`, que indica el número inicial de las opciones cuando el usuario debe seleccionar al campeón.
+- De `torneo.h`: `MAX_EQUIPOS`, `ANCHO_POSICION`, `ANCHO_NOMBRE`, `ANCHO_ESTADISTICA` y `ANCHO_PUNTOS`.
+
+Son constantes porque representan valores que no necesitan cambiar durante la ejecución del programa. Utilizarlas permite identificar fácilmente qué significa cada número y mantener un formato uniforme en la tabla de posiciones.
+
+**¿Qué funciones reutilizaste de `utilerias.h`, de `torneo.h` o de otro módulo?**
+
+- De `utilerias.h`: `leerEntero`, que utilizo para solicitar la selección del campeón y recibir un número entero.
+- De `torneo.h`: los registros `Equipo` y las constantes relacionadas con la cantidad de equipos y el formato de las columnas.
+- También de `torneo.h`: `reporteDisponible`, que verifica si el torneo ya fue simulado antes de mostrar la tabla o el campeón.
+- De `torneo.h`: `imprimirTitulo`, que utilizo para mostrar los encabezados de la tabla de posiciones y del campeón.
+
+**¿Qué casos de rechazo maneja tu módulo y qué mensaje muestra en cada uno?**
+
+| Caso | Mensaje |
+| --- | --- |
+| Mostrar la tabla antes de simular el torneo | `Reporte no disponible: primero hay que simular el torneo.` |
+| Mostrar el campeón antes de realizar la simulación | `Reporte no disponible: primero hay que simular el torneo.` |
+| Seleccionar un número menor al permitido | `Opcion no valida. Elige un numero del 1 al N.` |
+| Seleccionar un número mayor a la cantidad de equipos empatados | `Opcion no valida. Elige un numero del 1 al N.` |
+| Escribir texto o una entrada que no sea un entero | `Entrada no valida. Escribe un numero entero.` (de `leerEntero`) |
+
+**## 5. Receta**
+
+```text
+intercambiarEquipos(primero, segundo):
+    crear un Equipo temporal
+    guardar primero en temporal
+    copiar segundo en primero
+    copiar temporal en segundo
+
+ordenarTabla(equipos, total, tabla):
+    copiar todos los equipos originales al arreglo tabla
+
+    para pasada desde 0 hasta total - 2:
+        para j desde 0 hasta total - 2 - pasada:
+            si tabla[j] tiene menos puntos que tabla[j + 1]:
+                intercambiar los dos equipos
+
+imprimirFilaTabla(posicion, equipo):
+    imprimir la posición del equipo
+    imprimir su nombre
+    imprimir partidos jugados
+    imprimir partidos ganados, empatados y perdidos
+    imprimir goles a favor y goles en contra
+    imprimir sus puntos
+    utilizar setw para alinear las columnas
+
+mostrarTabla(equipos, total, simulado):
+    comprobar si el reporte está disponible
+    si no está disponible:
+        terminar la función
+
+    crear el arreglo tabla
+    ordenar los equipos
+    imprimir el título de la tabla
+    imprimir los nombres de las columnas
+
+    para i desde 0 hasta total - 1:
+        llamar a imprimirFilaTabla
+
+buscarLideres(tabla, total, lideres):
+    iniciar cantidad en 0
+    guardar los puntos del primer equipo
+
+    para cada equipo mientras sus puntos sean iguales
+        a los del primer lugar:
+        guardar su dirección en lideres
+        aumentar cantidad
+
+    regresar cantidad
+
+elegirCampeon(lideres, cantidad):
+    mostrar que existe un empate
+    imprimir los nombres de los equipos empatados
+
+    solicitar una opción al usuario
+    mientras la opción sea menor que 1
+    o mayor o igual que cantidad + 1:
+        mostrar mensaje de error
+        volver a solicitar la opción
+
+    regresar la dirección del equipo seleccionado
+
+mostrarCampeon(equipos, total, simulado):
+    comprobar si el reporte está disponible
+    si no está disponible:
+        terminar la función
+
+    crear el arreglo tabla
+    ordenar los equipos
+    buscar los líderes
+
+    imprimir el título del campeón
+    seleccionar al primer líder como campeón
+
+    si hay más de un líder:
+        solicitar al usuario que elija al campeón
+
+    imprimir el nombre del campeón
+    imprimir sus puntos
+```
+
+**\*\*¿Probaste tu receta a mano con los datos del escenario? ¿Qué corregiste?\*\***
+
+Sí. Comprobé manualmente cómo se realiza el ordenamiento de los equipos utilizando sus puntos. Revisé que primero se copiaran los registros al arreglo `tabla` y después se compararan los equipos de dos en dos. Cuando el equipo de la izquierda tenía menos puntos que el siguiente, se intercambiaban sus posiciones. Así verifiqué que los equipos con mayor puntuación terminaran al principio de la clasificación.
+
+También revisé el caso en el que dos o más equipos tienen los mismos puntos en el primer lugar. Comprobé que `buscarLideres` identificara a todos los equipos empatados y que `elegirCampeon` mostrara las opciones correspondientes. Además, verifiqué que el programa rechazara los números que estuvieran fuera del rango permitido.
+
+Una decisión importante fue trabajar con una copia de los equipos para ordenar la tabla, evitando modificar el arreglo original. También utilicé apuntadores para identificar a los equipos empatados y permitir que el usuario eligiera al campeón.
+
+**## 6. Pruebas**
+
+Todas las pruebas se realizaron con el programa completo, comprobando el funcionamiento del ordenamiento, la presentación de las estadísticas y la elección del campeón.
+
+| # | Qué probaste | Entrada | Resultado esperado | Resultado obtenido |
+| --- | --- | --- | --- | --- |
+| 1 | Mostrar la tabla sin haber simulado | Opción de tabla antes de registrar resultados | Mostrar un mensaje de rechazo | `Reporte no disponible: primero hay que simular el torneo.` ✔ |
+| 2 | Consultar al campeón antes de simular | Opción de campeón sin resultados | Impedir la consulta | Se mostró el mensaje de reporte no disponible. ✔ |
+| 3 | Ordenamiento de equipos | Equipos con diferentes cantidades de puntos | Acomodarlos de mayor a menor puntuación | Los equipos quedaron ordenados correctamente. ✔ |
+| 4 | Conservación de los datos originales | Ejecutar `ordenarTabla` con el arreglo de equipos | No modificar el arreglo original | Se ordenaron las copias almacenadas en `tabla`. ✔ |
+| 5 | Impresión de estadísticas | Mostrar la tabla después de simular | Presentar todas las estadísticas de cada equipo | Se imprimieron correctamente los partidos, goles y puntos. ✔ |
+| 6 | Identificación de empate | Dos o más equipos con los mismos puntos en primer lugar | Encontrar a todos los líderes | `buscarLideres` identificó correctamente a los equipos empatados. ✔ |
+| 7 | Selección del campeón | Elegir un número correspondiente a uno de los equipos empatados | Mostrar al equipo seleccionado | Se imprimieron correctamente su nombre y sus puntos. ✔ |
+| 8 | Opción menor al rango permitido | Introducir
