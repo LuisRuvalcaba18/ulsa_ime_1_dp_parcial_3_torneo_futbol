@@ -38,7 +38,7 @@ void mostrarMenu() {
 // Recibe la opcion, los arreglos como APUNTADOR a su primer elemento
 //         equipos, partidos y la matriz goles, y la DIRECCION de
 //         totalEquipos, totalPartidos y torneoSimulado, para leerlos
-//         y modificarlos con el operador 
+//         y modificarlos con el operador *.
 void ejecutarOpcion(int opcion, Equipo* equipos, int* totalEquipos,
                     Partido* partidos, int* totalPartidos,
                     int goles[][MAX_EQUIPOS], bool* torneoSimulado) {
@@ -51,11 +51,10 @@ void ejecutarOpcion(int opcion, Equipo* equipos, int* totalEquipos,
             break;
         case OPCION_SIMULAR:
             if (simularTorneo(partidos, *totalPartidos, *totalEquipos, *torneoSimulado)) {
-            
+                calcularTabla(equipos, *totalEquipos, partidos, *totalPartidos);
+                llenarMatriz(partidos, *totalPartidos, goles);
             }
             break;
         case OPCION_RESULTADOS:
             mostrarResultados(equipos, partidos, *totalPartidos, *torneoSimulado);
             break;
-    }
-}
