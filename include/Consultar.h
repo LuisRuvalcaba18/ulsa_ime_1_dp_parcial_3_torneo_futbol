@@ -1,10 +1,10 @@
-// =====================================================
-// MODULO 5: CONSULTAS
-// Responsable: Ferrer
-// Busca un equipo por nombre (sin distinguir mayusculas) y muestra
-// su ficha con sus partidos.
-// =====================================================
+#pragma once
 
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include "utilerias.h"
+#include "torneo.h"
 // Busca un equipo por nombre, sin distinguir mayusculas y minusculas.
 // Recibe: el arreglo y el total como const, y el nombre buscado.
 // Devuelve: apuntador al Equipo encontrado, o nullptr si no existe.
