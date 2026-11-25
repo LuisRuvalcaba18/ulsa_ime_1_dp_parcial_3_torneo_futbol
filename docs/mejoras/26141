@@ -32,5 +32,31 @@ Menú: no requiere cambios.]
 Receta en pseudocódigo de la solución con tu propuesta. Marca cada paso nuevo con `[NUEVO]` y cada paso que cambia con `[CAMBIA]`. Los pasos sin marca son los que ya existen.
 
 ```
-[Inserta aquí tu respuesta]
+[ INICIO
+
+Registrar los equipos.
+
+Simular los partidos.
+
+Calcular la tabla de posiciones.
+
+[NUEVO] Para cada equipo, calcular:
+        diferenciaGoles = golesFavor - golesContra
+
+[NUEVO] Copiar los equipos en el arreglo tabla.
+
+[CAMBIA] Ordenar tabla utilizando:
+        1. Mayor cantidad de puntos.
+        2. Mayor diferencia de goles.
+        3. Mayor cantidad de goles a favor.
+        4. Si persiste el empate, mantener el orden de registro.
+
+Mostrar la tabla de posiciones.
+
+Mostrar los resultados del campeón.
+Si existen varios equipos empatados en todos los criterios:
+        Mostrar los equipos empatados.
+        Pedir al usuario elegir al campeón.
+
+FIN]
 ```
