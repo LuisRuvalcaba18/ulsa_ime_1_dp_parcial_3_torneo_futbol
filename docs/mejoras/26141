@@ -9,7 +9,12 @@ Propuesta de mejora elaborada por: [Alan Rodrigo Guardiola Martinez]
 
 ¿Es una mejora o una corrección? ¿Qué problema resuelve o qué agrega, y a quién beneficia?
 
-[Inserta aquí tu respuesta]
+[Es una mejora que resuelve empates entre equipos con los mismos puntos. Agregará el uso de:
+
+Puntos.
+Diferencia de goles.
+Goles a favor.
+Esto permite ordenar automáticamente la clasificación y evita decidir empates solo por el orden de registro.]
 
 ## 2. Qué implica en el diseño
 
