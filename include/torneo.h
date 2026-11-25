@@ -96,3 +96,14 @@ inline int rivalDe(const Partido& partido, int indiceEquipo) {
     }
     return partido.local;
 }
+
+// Revisa si ya se puede mostrar un reporte del torneo.
+// checa si el torneo ya se simulo.
+// Devuelve true si se puede mostrar; si no, avisa y devuelve false.
+inline bool reporteDisponible(bool torneoSimulado) {
+    if (!torneoSimulado) {
+        std::cout << "Reporte no disponible: primero hay que simular el torneo.\n";
+        return false;
+    }
+    return true;
+}
