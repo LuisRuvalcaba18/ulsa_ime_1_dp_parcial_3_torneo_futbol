@@ -16,6 +16,10 @@ const int CARACTERES_ABREVIATURA = 3;
 const int PUNTOS_VICTORIA = 3;
 const int PUNTOS_EMPATE = 1;
 const int PUNTOS_DERROTA = 0;
+
+// Ancho de cada columna de los reportes (PROYECTO.md, seccion 2.6):
+// # = 4, POS = 5, EQUIPO/LOCAL/RIVAL = 17, MARCADOR = 10,
+// PJ/PG/PE/PP/GF/GC = 4, PTS = 5 y cada columna de la matriz = 6.
 const int ANCHO_NUMERO = 4;       
 const int ANCHO_POSICION = 5;     
 const int ANCHO_NOMBRE = 17;     
@@ -24,6 +28,10 @@ const int ANCHO_ESTADISTICA = 4;
 const int ANCHO_PUNTOS = 5;       
 const int ANCHO_CELDA = 6;        
 // ---------- Registros ----------
+
+// Datos: nombre, abreviatura y estadisticas del torneo.
+// Operaciones: registrarEquipo (modulo 1), reiniciarEstadisticas y
+// registrarResultado (modulo 3), buscarEquipo (modulo 5).
 struct Equipo {
     std::string nombre;
     std::string abreviatura;
@@ -36,6 +44,9 @@ struct Equipo {
     int puntos = 0;
 };
 
+// Datos: indices del equipo local y visitante en el arreglo de equipos
+// y los goles de cada uno.
+// Operaciones: juegaEnPartido, golesDelEquipo, golesDelRival y rivalDe.
 struct Partido {
     int local = 0;
     int visitante = 0;
@@ -60,13 +71,23 @@ inline bool mismoTexto(const std::string& a, const std::string& b) {
     return aMayusculas(a) == aMayusculas(b);
 }
 
+// Arma el texto de un marcador, por ejemplo "3 - 1", para que setw
+// lo trate como un solo dato.
+// Recibe: goles del primer equipo y goles del segundo.
+// Devuelve: el marcador como texto.
 inline std::string textoMarcador(int golesPrimero, int golesSegundo) {
     return std::to_string(golesPrimero) + " - " + std::to_string(golesSegundo);
 }
 
+// Imprime el titulo de un reporte con el formato "--- TITULO ---".
+// Recibe: el titulo sin guiones, por ejemplo "TABLA DE POSICIONES".
 inline void imprimirTitulo(const std::string& titulo) {
     std::cout << "--- " << titulo << " ---\n";
 }
+
+// ---------- Operaciones del TDA Partido ----------
+// Reciben el partido como const& (solo se lee) y el indice de un
+// equipo en el arreglo de equipos.
 
 // Devuelve: true si el equipo jugo ese partido.
 inline bool juegaEnPartido(const Partido& partido, int indiceEquipo) {
