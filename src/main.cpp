@@ -79,3 +79,26 @@ void ejecutarOpcion(int opcion, Equipo* equipos, int* totalEquipos,
             break;
     }
 }
+int main() {
+    // Datos del torneo: arreglos locales a main (no hay variables globales).
+    Equipo equipos[MAX_EQUIPOS];
+    int totalEquipos = 0;
+    Partido partidos[TOTAL_PARTIDOS];
+    int totalPartidos = 0;
+    int goles[MAX_EQUIPOS][MAX_EQUIPOS] = {};
+    bool torneoSimulado = false;
+
+    // Menu que se repite hasta elegir "Salir".
+    // El nombre de un arreglo ya es la direccion de su primer elemento;
+    // a los contadores y a la bandera se les pone & para mandar su direccion.
+    int opcion = 0;
+    do {
+        mostrarMenu();
+        opcion = leerEntero("Opcion: ");
+        std::cout << "\n";
+        ejecutarOpcion(opcion, equipos, &totalEquipos, partidos, &totalPartidos,
+                       goles, &torneoSimulado);
+    } while (opcion != OPCION_SALIR);
+
+    return 0;
+}
