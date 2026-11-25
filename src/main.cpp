@@ -33,3 +33,29 @@ void mostrarMenu() {
     std::cout << OPCION_MATRIZ << ". Mostrar matriz de enfrentamientos\n";
     std::cout << OPCION_SALIR << ". Salir\n";
 }      
+
+// Ejecuta la opcion elegida del menu
+// Recibe la opcion, los arreglos como APUNTADOR a su primer elemento
+//         equipos, partidos y la matriz goles, y la DIRECCION de
+//         totalEquipos, totalPartidos y torneoSimulado, para leerlos
+//         y modificarlos con el operador 
+void ejecutarOpcion(int opcion, Equipo* equipos, int* totalEquipos,
+                    Partido* partidos, int* totalPartidos,
+                    int goles[][MAX_EQUIPOS], bool* torneoSimulado) {
+    switch (opcion) {
+        case OPCION_REGISTRAR:
+            registrarEquipo(equipos, *totalEquipos);
+            break;
+        case OPCION_MOSTRAR_EQUIPOS:
+            mostrarEquipos(equipos, *totalEquipos);
+            break;
+        case OPCION_SIMULAR:
+            if (simularTorneo(partidos, *totalPartidos, *totalEquipos, *torneoSimulado)) {
+            
+            }
+            break;
+        case OPCION_RESULTADOS:
+            mostrarResultados(equipos, partidos, *totalPartidos, *torneoSimulado);
+            break;
+    }
+}
