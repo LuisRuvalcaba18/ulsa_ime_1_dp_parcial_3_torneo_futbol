@@ -58,3 +58,24 @@ void ejecutarOpcion(int opcion, Equipo* equipos, int* totalEquipos,
         case OPCION_RESULTADOS:
             mostrarResultados(equipos, partidos, *totalPartidos, *torneoSimulado);
             break;
+            case OPCION_TABLA:
+            mostrarTabla(equipos, *totalEquipos, *torneoSimulado);
+            break;
+        case OPCION_CAMPEON:
+            mostrarCampeon(equipos, *totalEquipos, *torneoSimulado);
+            break;
+        case OPCION_CONSULTAR:
+            consultarEquipo(equipos, *totalEquipos, partidos, *totalPartidos, *torneoSimulado);
+            break;
+        case OPCION_MATRIZ:
+            mostrarMatriz(equipos, *totalEquipos, goles, *torneoSimulado);
+            break;
+        case OPCION_SALIR:
+            std::cout << "Hasta luego.\n";
+            break;
+        default:
+            std::cout << "Opcion no valida. Elige un numero del "
+                      << OPCION_REGISTRAR << " al " << OPCION_SALIR << ".\n";
+            break;
+    }
+}
