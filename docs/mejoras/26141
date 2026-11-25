@@ -1,0 +1,62 @@
+# Propuesta de mejora
+
+Propuesta de mejora elaborada por: [Alan Rodrigo Guardiola Martinez]
+
+**Matrícula:** [26141]  
+**Título de la propuesta:** [Inserta aquí tu respuesta]
+
+## 1. Impacto
+
+¿Es una mejora o una corrección? ¿Qué problema resuelve o qué agrega, y a quién beneficia?
+
+[Es una mejora que resuelve empates entre equipos con los mismos puntos. Agregará el uso de:
+
+Puntos.
+Diferencia de goles.
+Goles a favor.
+Esto permite ordenar automáticamente la clasificación y evita decidir empates solo por el orden de registro.]
+
+## 2. Qué implica en el diseño
+
+¿Qué partes de la solución cambian (registros, arreglos, constantes, funciones, menú)? Justifica cada cambio.
+
+[Registro Equipo: agregar la variable diferenciaGoles.
+Base común: añadir una constante o criterio auxiliar si fuera necesario.
+Tabla de posiciones: cambiar ordenarTabla para comparar primero puntos, luego diferencia de goles y finalmente goles a favor.
+Cálculo de estadísticas: actualizar la diferencia de goles después de cada partido.
+Campión: la opción de selección manual solo aparecería si persiste el empate completo.
+Menú: no requiere cambios.]
+
+## 3. Receta
+
+Receta en pseudocódigo de la solución con tu propuesta. Marca cada paso nuevo con `[NUEVO]` y cada paso que cambia con `[CAMBIA]`. Los pasos sin marca son los que ya existen.
+
+```
+[ INICIO
+
+Registrar los equipos.
+
+Simular los partidos.
+
+Calcular la tabla de posiciones.
+
+[NUEVO] Para cada equipo, calcular:
+        diferenciaGoles = golesFavor - golesContra
+
+[NUEVO] Copiar los equipos en el arreglo tabla.
+
+[CAMBIA] Ordenar tabla utilizando:
+        1. Mayor cantidad de puntos.
+        2. Mayor diferencia de goles.
+        3. Mayor cantidad de goles a favor.
+        4. Si persiste el empate, mantener el orden de registro.
+
+Mostrar la tabla de posiciones.
+
+Mostrar los resultados del campeón.
+Si existen varios equipos empatados en todos los criterios:
+        Mostrar los equipos empatados.
+        Pedir al usuario elegir al campeón.
+
+FIN]
+```
