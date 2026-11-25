@@ -8,6 +8,18 @@
 #include "Matriz.h"             
 #include "clasificación.h"      
 #include "Consultar.h"    
+
+// Opciones del menu.
+const int OPCION_REGISTRAR = 1;
+const int OPCION_MOSTRAR_EQUIPOS = 2;
+const int OPCION_SIMULAR = 3;
+const int OPCION_RESULTADOS = 4;
+const int OPCION_TABLA = 5;
+const int OPCION_CAMPEON = 6;
+const int OPCION_CONSULTAR = 7;
+const int OPCION_MATRIZ = 8;
+const int OPCION_SALIR = 9;
+
 // Imprime el menu principal.
 void mostrarMenu() {
     std::cout << "\n===== TORNEO DE FUTBOL =====\n";
