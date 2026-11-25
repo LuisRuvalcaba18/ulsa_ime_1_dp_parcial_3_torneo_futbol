@@ -10,7 +10,7 @@
 | 1 | 26141 | Alan Rodrigo Guardiola Martinez | [Pendiente] | Registro de equipos |
 | 2 | 26212 | Romeo Ramos Zertuche | romerz | Simulacion de partidos |
 | 3 | [Pendiente] | [Pendiente] | [Pendiente] | Tabla de posiciones |
-| 4 | [Pendiente] | [Pendiente] | [Pendiente] | Clasificacion y campeon |
+| 4 | [26334] | [Manuel Mona Pèrez] | [manuelmona-star] | Clasificacion y campeon |
 | 5 | [Pendiente] | [Pendiente] | [Pendiente] | Consultas |
 | 6 | [Pendiente] | [Pendiente] | [Pendiente] | Matriz de enfrentamientos |
 
@@ -186,7 +186,7 @@ FIN
 | 1 | [Pendiente: docs/26141/modulo.md] | [26141: propuesta](docs/mejoras/26141) |
 | 2 | [26212: simulacion de partidos](docs/26212/modulo.md) | [26212: estadisticas del torneo](docs/mejoras/26212/mejora.md) |
 | 3 | [Pendiente] | [Pendiente] |
-| 4 | [Pendiente] | [Pendiente] |
+| 4 | [26334: clasificaciòn y campeòn] (docs/mejoras/26334/mejora.md) | [Tabla de posiciones automatica] |
 | 5 | [Pendiente] | [Pendiente] |
 | 6 | [Pendiente: equipos de 5 usan docs/modulo_6/modulo.md] | Sin propuesta adicional en equipos de 5 |
 
