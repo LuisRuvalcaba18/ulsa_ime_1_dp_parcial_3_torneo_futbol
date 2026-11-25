@@ -1,0 +1,38 @@
+# Propuesta de mejora
+
+Propuesta de mejora elaborada por: [Luis Enrique Ruvalcaba Alvarez]
+
+**Matrícula:** [26083]  
+**Título de la propuesta:** El usuario puede elegir la abreviatura de su equipo
+
+## 1. Impacto
+
+Es una **mejora**. Ahora la abreviatura siempre se calcula sola (las 3 primeras letras). A veces queda rara: si `PEL` ya existe, `Pelotas` recibe `PEO`.
+
+Con la mejora, el programa sugiere la abreviatura y el usuario puede aceptarla o escribir otra. Beneficia al usuario, que decide cómo se ve su equipo en la matriz de enfrentamientos.
+
+## 2. Qué implica en el diseño
+
+- **Constantes y registros:** no cambian. Se usa `CARACTERES_ABREVIATURA` y el campo `abreviatura` que ya existe en `Equipo`.
+- **Función nueva `elegirAbreviatura`:** pregunta si se acepta la sugerida. Si no, pide una nueva hasta que sea válida (3 letras sin acentos y que no esté usada). Reutiliza `abreviaturaUsada` y `aMayusculas`.
+- **Función `registrarEquipo` (cambia):** usa `generarAbreviatura` solo como sugerencia y llama a `elegirAbreviatura`.
+- **Menú:** no cambia, todo pasa dentro de "Registrar equipo".
+- **Rechazos nuevos:** abreviatura de longitud distinta de 3, con caracteres no permitidos, o ya usada.
+
+## 3. Receta
+
+```
+registrarEquipo(equipos, total):
+    (pasos existentes: validar lista llena y pedir nombre)
+    sugerida = generarAbreviatura(equipos, total, nombre)
+    [CAMBIA] abreviatura = elegirAbreviatura(equipos, total, sugerida)
+    guardar equipo y aumentar total
+
+[NUEVO] elegirAbreviatura(equipos, total, sugerida):
+    [NUEVO] preguntar: 1 = aceptar sugerida, 2 = escribir otra
+    [NUEVO] si elige 1: regresar sugerida
+    [NUEVO] repetir:
+    [NUEVO]     leer candidata y pasarla a mayusculas
+    [NUEVO]     si mide 3, son letras ASCII y no esta usada: regresar candidata
+    [NUEVO]     si no: avisar el motivo
+```
