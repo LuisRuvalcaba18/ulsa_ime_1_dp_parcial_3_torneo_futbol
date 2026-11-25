@@ -9,7 +9,7 @@
 | --- | --- | --- | --- | --- |
 | 1 | 26141 | Alan Rodrigo Guardiola Martinez | [Pendiente] | Registro de equipos |
 | 2 | 26212 | Romeo Ramos Zertuche | romerz | Simulacion de partidos |
-| 3 | [Pendiente] | [Pendiente] | [Pendiente] | Tabla de posiciones |
+| 3 | [26221] | [Juan Antonio Rodriguez Zuñiga] | [Pendiente] | Tabla de posiciones |
 | 4 | [26334] | [Manuel Mona Pèrez] | [manuelmona-star] | Clasificacion y campeon |
 | 5 | [Pendiente] | [Pendiente] | [Pendiente] | Consultas |
 | 6 | [Pendiente] | [Pendiente] | [Pendiente] | Matriz de enfrentamientos |

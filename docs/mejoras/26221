@@ -1,0 +1,50 @@
+# Propuesta de mejora
+
+Propuesta de mejora elaborada por: [Juan Antonio Rodríguez Zúñiga]
+
+**Matrícula:** [26221]  
+**Título de la propuesta:** La tabla de posiciones se ordena por puntos y desempata por diferencia de goles
+
+## 1. Impacto
+
+Es una **mejora**. Ahora `calcularTabla` solo suma las estadísticas de cada equipo y la tabla se muestra en el orden en que se registraron los equipos. Un equipo con 9 puntos puede aparecer debajo de uno con 3, y no se puede saber quién va ganando.
+
+Con la mejora, la tabla se muestra ordenada de mayor a menor por puntos. Si hay empate en puntos, desempata la diferencia de goles (`golesFavor - golesContra`) y después los goles a favor. Beneficia al usuario, que ve de un vistazo quién es el líder y quién va en último lugar, como en una tabla de liga real.
+
+## 2. Qué implica en el diseño
+
+- **Constantes y registros:** no cambian. La diferencia de goles no se guarda en `Equipo`, se calcula al comparar con los campos `golesFavor` y `golesContra` que ya existen. Así no hay un dato extra que pueda quedar desactualizado.
+- **Función nueva `diferenciaGoles`:** recibe un `Equipo` y regresa `golesFavor - golesContra`.
+- **Función nueva `esMejorQue`:** compara dos equipos con el criterio puntos, luego diferencia de goles, luego goles a favor. Regresa `true` si el primero debe ir arriba.
+- **Función nueva `ordenarTabla`:** llena un arreglo de posiciones con los índices de los equipos, ordenado con `esMejorQue`. **No reordena el arreglo `equipos`**, porque `Partido` guarda `local` y `visitante` como índices de ese arreglo y reordenarlo rompería los resultados.
+- **Función `calcularTabla`:** no cambia. Sigue calculando las estadísticas, y el ordenamiento se hace después.
+- **Función que muestra la tabla (cambia):** recorre el arreglo de posiciones en lugar de recorrer `equipos` directamente.
+- **Menú:** no cambia, todo pasa dentro de "Ver tabla".
+- **Rechazos nuevos:** ninguno, porque no se pide nada nuevo al usuario.
+
+## 3. Receta
+
+```
+[NUEVO] diferenciaGoles(equipo):
+    [NUEVO] regresar equipo.golesFavor - equipo.golesContra
+
+[NUEVO] esMejorQue(a, b):
+    [NUEVO] si a.puntos es distinto de b.puntos: regresar a.puntos > b.puntos
+    [NUEVO] si diferenciaGoles(a) es distinta de diferenciaGoles(b):
+    [NUEVO]     regresar diferenciaGoles(a) > diferenciaGoles(b)
+    [NUEVO] regresar a.golesFavor > b.golesFavor
+
+[NUEVO] ordenarTabla(equipos, totalEquipos, posiciones):
+    [NUEVO] para i de 0 a totalEquipos - 1: posiciones[i] = i
+    [NUEVO] repetir (ordenamiento por burbuja sobre posiciones):
+    [NUEVO]     si esMejorQue(equipos[posiciones[j+1]], equipos[posiciones[j]]):
+    [NUEVO]         intercambiar posiciones[j] y posiciones[j+1]
+
+calcularTabla(equipos, totalEquipos, partidos, totalPartidos):
+    (pasos existentes: reiniciar estadísticas y aplicar cada partido)
+
+mostrarTabla(equipos, totalEquipos, partidos, totalPartidos):
+    calcularTabla(equipos, totalEquipos, partidos, totalPartidos)
+    [NUEVO] ordenarTabla(equipos, totalEquipos, posiciones)
+    [CAMBIA] para cada posición en posiciones: imprimir el equipo en equipos[posiciones[i]]
+```
