@@ -7,7 +7,7 @@
 
 | Modulo | Matricula | Nombre | Usuario de GitHub | Tema |
 | --- | --- | --- | --- | --- |
-| 1 | 26141 | Alan Rodrigo Guardiola Martinez | [Pendiente] | Registro de equipos |
+| 1 | 26083 | Luis Enrique Ruvalcaba Alvarez | [LuisRuvalcaba18] | Registro de equipos |
 | 2 | 26212 | Romeo Ramos Zertuche | romerz | Simulacion de partidos |
 | 3 | [26221] | [Juan Antonio Rodriguez Zuñiga] | [Pendiente] | Tabla de posiciones |
 | 4 | [26334] | [Manuel Mona Pèrez] | [manuelmona-star] | Clasificacion y campeon |

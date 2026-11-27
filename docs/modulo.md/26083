@@ -1,0 +1,203 @@
+## 1. Autor
+
+**Nombre:** Luis Enrique Ruvalcaba Alvarez 
+**Matrícula:** 26083  
+**Módulo:** registro de equipos  
+**Archivo de código:** `include/registro_equipos.h`
+
+## 2. Propósito
+
+Mi módulo captura los 6 equipos del torneo y muestra la lista. Cada equipo se registra con un nombre validado (de 3 a 15 caracteres, sin acentos ni ñ, sin repetirse aunque cambien las mayúsculas) y con una abreviatura de 3 letras que no se repite con la de otro equipo.
+
+Al usuario le sirve porque los equipos son la base de todo lo demás: sin ellos no se puede simular, calcular la tabla, elegir al campeón ni consultar fichas. Todos los demás módulos reciben el arreglo de `Equipo` que llena mi módulo.
+
+El registro es de uno en uno, y cuando la lista llega a 6 equipos el programa rechaza cualquier registro adicional.
+
+## 3. Entradas y salidas
+
+| Función | Recibe | Produce |
+| --- | --- | --- |
+| `nombreValido` | El nombre como `const&` y `motivo` por referencia | Devuelve `true` si el nombre es válido. Si no, deja la razón en `motivo` |
+| `nombreRepetido` | El arreglo de equipos como `const`, `total` por valor y el nombre como `const&` | Devuelve `true` si ya existe un equipo con ese nombre (sin distinguir mayúsculas) |
+| `abreviaturaUsada` | El arreglo como `const`, `total` por valor y la abreviatura como `const&` | Devuelve `true` si algún equipo ya usa esa abreviatura |
+| `generarAbreviatura` | El arreglo como `const`, `total` por valor y el nombre como `const&` | Devuelve una abreviatura de 3 letras que no se repite |
+| `registrarEquipo` | El arreglo `equipos` (se llena) y `total` por referencia (se incrementa) | Devuelve `true` si registró o `false` si la lista estaba llena. Imprime el rechazo o "Equipo registrado: nombre (ABR)" |
+| `mostrarEquipos` | El arreglo como `const` y `total` por valor | Imprime el reporte "EQUIPOS REGISTRADOS" o avisa que no hay equipos |
+
+## 4. Decisiones de diseño
+
+**¿Qué funciones tiene tu módulo y qué tarea hace cada una?**
+
+- `nombreValido`: revisa los caracteres y la longitud del nombre.
+- `nombreRepetido`: busca si el nombre ya está registrado.
+- `abreviaturaUsada`: busca si una abreviatura ya está registrada.
+- `generarAbreviatura`: calcula una abreviatura única de 3 letras.
+- `registrarEquipo`: rechaza si la lista está llena, pide el nombre hasta que sea válido y no repetido, y guarda el equipo.
+- `mostrarEquipos`: imprime el reporte con el formato de la guía.
+
+Separé la validación, la búsqueda de repetidos y la generación de la abreviatura en funciones distintas para que cada una tenga **una sola tarea**. `abreviaturaUsada` existe aparte porque `generarAbreviatura` hace esa pregunta varias veces, y así no se repite el mismo ciclo.
+
+**¿Qué estructuras de datos usa tu módulo (registros, arreglos, matrices o apuntadores), por qué las elegiste y cómo pasas los datos a cada función (por valor, por referencia, como arreglo o con un apuntador)?**
+
+- **Registro `Equipo`:** guarda nombre, abreviatura y las estadísticas (jugados, ganados, empatados, perdidos, goles a favor, goles en contra y puntos). Agrupa todos los datos de un equipo en un solo lugar y evita arreglos paralelos. Las estadísticas tienen valor inicial 0 en el `struct`, así que un equipo nuevo siempre empieza limpio.
+- **Arreglo de registros `Equipo equipos[MAX_EQUIPOS]`:** se declara en `main` (no hay variables globales) y mi módulo lo llena. Se pasa como arreglo, o sea, la dirección de su primer elemento, por eso `registrarEquipo` puede modificar el arreglo original.
+- **Por referencia:** `total` en `registrarEquipo`, porque la función lo incrementa y el cambio debe verse en `main`. También `motivo` en `nombreValido`, para devolver la razón del rechazo sin imprimir dentro de la validación.
+- **Por valor:** `total` en las funciones que solo lo leen, porque no necesitan cambiarlo.
+- **Como `const`:** el arreglo en `nombreRepetido`, `abreviaturaUsada`, `generarAbreviatura` y `mostrarEquipos`, y el texto como `const std::string&` (evita copiarlo y no permite modificarlo), porque solo se leen.
+
+**¿Dónde demuestras los temas asignados a tu módulo?**
+
+- **Registros:** en `registrarEquipo` se crea un `Equipo`, se llenan sus campos `nombre` y `abreviatura` y se guarda en el arreglo.
+- **Arreglos:** `equipos[total] = nuevo` guarda en la primera posición libre, y `mostrarEquipos`, `nombreRepetido` y `abreviaturaUsada` recorren el arreglo solo hasta `total`.
+- **Validación de cadenas:** en `nombreValido` se revisa cada carácter con `isalnum` y `c > 127` (los acentos y la ñ ocupan 2 bytes en UTF-8, con valores mayores a 127), y se compara la longitud con las constantes. En `generarAbreviatura` se usan `substr` y la concatenación de cadenas.
+
+**¿Qué ciclos usaste y por qué esos?**
+
+- **`for`** en `nombreValido`, `nombreRepetido`, `abreviaturaUsada` y `mostrarEquipos`, porque sé cuántas vueltas da cada uno (el tamaño del nombre o `total`).
+- **`for` con `char`** en `generarAbreviatura` para probar de la `A` a la `Z`.
+- **`while (true)`** en `registrarEquipo`, porque no sé cuántas veces se va a equivocar el usuario: se repite hasta que el nombre sea válido y no repetido, y se sale con `break`.
+
+**¿Qué constantes usaste y por qué son constantes?**
+
+- De `torneo.h`: `MAX_EQUIPOS`, `MIN_CARACTERES_NOMBRE`, `MAX_CARACTERES_NOMBRE` y `CARACTERES_ABREVIATURA`.
+
+Son constantes porque su valor nunca cambia durante el programa. Con nombre se entiende qué significa cada número, y si una regla cambia se edita una sola línea. Los mensajes de rechazo también usan las constantes, así que cambian solos.
+
+**¿Qué funciones reutilizaste de `utilerias.h`, de `torneo.h` o de otro módulo?**
+
+- De `utilerias.h`: `leerCadena`, que lee el nombre, recorta espacios y rechaza entradas vacías.
+- De `torneo.h`: el registro `Equipo`, las constantes, `aMayusculas` y `mismoTexto`. Las dos funciones las puse en `torneo.h` porque los módulos de campeón y consultas también comparan nombres sin distinguir mayúsculas, y así no se duplica la lógica.
+
+**¿Qué casos de rechazo maneja tu módulo y qué mensaje muestra en cada uno?**
+
+| Caso | Mensaje |
+| --- | --- |
+| Registrar con la lista llena | `Lista llena: ya hay 6 equipos registrados.` |
+| Nombre de menos de 3 caracteres | `Nombre rechazado: el nombre es muy corto (minimo 3 caracteres).` y vuelve a pedir |
+| Nombre de más de 15 caracteres | `Nombre rechazado: el nombre es muy largo (maximo 15 caracteres).` y vuelve a pedir |
+| Nombre con acento, ñ, espacio o símbolo | `Nombre rechazado: solo se permiten letras sin acento ni enie y numeros, sin espacios.` y vuelve a pedir |
+| Nombre repetido (con otras mayúsculas) | `Nombre rechazado: ya existe un equipo con ese nombre.` y vuelve a pedir |
+| Nombre vacío o solo espacios | `Entrada no valida. Escribe al menos un caracter.` (de `leerCadena`) y vuelve a pedir |
+| Mostrar equipos sin registrar ninguno | `No hay equipos registrados.` |
+
+**Decisión sobre la abreviatura:** se calcula automáticamente con las 3 primeras letras en mayúscula. Si ya está usada, se conservan las 2 primeras letras y se cambia la tercera por las siguientes letras del nombre (`Pelotas` con `PEL` ocupada da `PEO`). Si aún choca, se prueba de la `A` a la `Z`. Elegí esta regla porque da abreviaturas parecidas al nombre y siempre encuentra una libre (hay 26 candidatas y máximo 5 equipos previos).
+
+**Decisión sobre los espacios:** no los acepto en el nombre, para que la abreviatura siempre tenga 3 caracteres útiles y sea fácil de validar. Se podría relajar en una mejora.
+
+## 5. Receta
+
+> Borrador: reescríbela con tus palabras.
+
+```
+registrarEquipo(equipos, total por referencia):
+    si total >= MAX_EQUIPOS:
+        avisar "lista llena" y regresar falso
+    repetir:
+        nombre = leerCadena("Nombre del equipo N: ")
+        si nombreValido(nombre, motivo) es falso:
+            avisar el motivo
+        si no, si nombreRepetido(equipos, total, nombre):
+            avisar "ya existe un equipo con ese nombre"
+        si no:
+            salir del ciclo
+    crear un Equipo nuevo (estadisticas en 0)
+    nuevo.nombre = nombre
+    nuevo.abreviatura = generarAbreviatura(equipos, total, nombre)
+    equipos[total] = nuevo
+    total = total + 1
+    avisar "Equipo registrado" con nombre y abreviatura
+    regresar verdadero
+
+nombreValido(nombre, motivo por referencia):
+    para cada caracter del nombre:
+        si es mayor que 127 o no es letra ni digito:
+            motivo = "solo letras sin acento ni enie y numeros"
+            regresar falso
+    si el tamano es menor que MIN_CARACTERES_NOMBRE:
+        motivo = "muy corto" y regresar falso
+    si el tamano es mayor que MAX_CARACTERES_NOMBRE:
+        motivo = "muy largo" y regresar falso
+    regresar verdadero
+
+nombreRepetido(equipos, total, nombre):
+    para i desde 0 hasta total - 1:
+        si mismoTexto(equipos[i].nombre, nombre): regresar verdadero
+    regresar falso
+
+abreviaturaUsada(equipos, total, abreviatura):
+    para i desde 0 hasta total - 1:
+        si equipos[i].abreviatura es igual a abreviatura: regresar verdadero
+    regresar falso
+
+generarAbreviatura(equipos, total, nombre):
+    mayus = nombre en mayusculas
+    base = primeras 3 letras de mayus
+    si base no esta usada: regresar base
+    prefijo = primeras 2 letras de mayus
+    para cada letra de mayus desde la posicion 3:
+        candidata = prefijo + letra
+        si candidata no esta usada: regresar candidata
+    para letra desde 'A' hasta 'Z':
+        candidata = prefijo + letra
+        si candidata no esta usada: regresar candidata
+    regresar base
+
+mostrarEquipos(equipos, total):
+    si total es 0:
+        avisar "No hay equipos registrados" y regresar
+    imprimir "--- EQUIPOS REGISTRADOS ---"
+    imprimir encabezado: # (ancho 4) y EQUIPO (ancho 17)
+    para i desde 0 hasta total - 1:
+        imprimir i + 1 (ancho 4) y equipos[i].nombre (ancho 17)
+```
+
+**¿Probaste tu receta a mano con los datos del escenario? ¿Qué corregiste?**
+
+[Ajusta con lo que hiciste de verdad.] Probé la receta a mano con `Pelicanos` y luego `Pelotas`: `Pelicanos` da `PEL`. `Pelotas` da base `PEL`, que ya está usada, así que conserva `PE` y prueba la cuarta letra del nombre (`O`), con lo que sale `PEO`. También seguí `Pumas` y `pumas`: el segundo pasa `nombreValido`, pero `nombreRepetido` lo detecta con `mismoTexto`.
+
+Lo que corregí: [por ejemplo, que `nombreValido` revisa los caracteres antes que la longitud, para que `Pinas` con ñ no dé un mensaje de longitud confuso, ya que la ñ ocupa 2 bytes].
+
+## 6. Pruebas
+
+> La columna "Resultado obtenido" la llenas tú después de ejecutar cada caso.
+
+| # | Qué probaste | Entrada | Resultado esperado | Resultado obtenido |
+| --- | --- | --- | --- | --- |
+| 1 | Mostrar sin equipos | Opción 2 sin registrar | `No hay equipos registrados.` | [llenar] |
+| 2 | Nombre válido | `Aguilas` | `Equipo registrado: Aguilas (AGU)` | [llenar] |
+| 3 | Exactamente 3 caracteres (límite) | `Leo` | Se acepta, abreviatura `LEO` | [llenar] |
+| 4 | Exactamente 15 caracteres (límite) | `Abcdefghijklmno` | Se acepta | [llenar] |
+| 5 | 2 caracteres | `Pu` | Rechazo por muy corto y vuelve a pedir | [llenar] |
+| 6 | 16 caracteres | `Abcdefghijklmnop` | Rechazo por muy largo y vuelve a pedir | [llenar] |
+| 7 | Con acento | `Águilas` | Rechazo por caracteres no permitidos | [llenar] |
+| 8 | Con ñ | `Piñas` | Rechazo por caracteres no permitidos | [llenar] |
+| 9 | Con espacio | `Club America` | Rechazo por caracteres no permitidos | [llenar] |
+| 10 | Repetido con otras mayúsculas | `Pumas` y luego `pumas` | Rechazo por repetido | [llenar] |
+| 11 | Entrada vacía | Solo Enter | `Entrada no valida. Escribe al menos un caracter.` | [llenar] |
+| 12 | Espacios alrededor del nombre | `  Tigres  ` | Se acepta como `Tigres` | [llenar] |
+| 13 | Abreviatura repetida | `Pelicanos` y luego `Pelotas` | `PEL` y `PEO` | [llenar] |
+| 14 | Séptimo equipo (lista llena) | Opción 1 con 6 registrados | `Lista llena: ya hay 6 equipos registrados.` | [llenar] |
+| 15 | Mostrar con equipos | Opción 2 con 6 registrados | Reporte con formato de la guía, en orden de registro | [llenar] |
+
+## 7. Bitácora de dudas y errores
+
+| # | Duda o error | Cómo lo resolví |
+| --- | --- | --- |
+| 1 | Mi primer código en `torneo.h` tenía `Struct` con mayúscula, no cerraba el `struct` con `;`, usaba `string` sin `std::` y escribió `leercadena` en vez de `leerCadena`. | Corregí la sintaxis: `struct`, `};`, `std::string` y `leerCadena` (C++ distingue mayúsculas). |
+| 2 | Había puesto un `main` y `Equipo equipos[6]` dentro de `torneo.h`. Eso sería una variable global y un segundo `main`, y el proyecto prohíbe las globales. | Quité ese código. El arreglo vive en `main` y se pasa por parámetro, y mi módulo va en su propio archivo `registro_equipos.h`. |
+| 3 | Al compilar `prueba.cpp` salió `No such file or directory`. | El archivo no existía en la carpeta del proyecto. Lo creé en la raíz y compilé desde ahí. |
+| 4 | ¿Cómo detectar acentos y ñ si `.size()` cuenta bytes? | En UTF-8 ocupan 2 bytes con valores mayores a 127. Convierto cada carácter a `unsigned char` y rechazo si `c > 127`. |
+| 5 | ¿Por qué `total` va por referencia y el arreglo no? | Un `int` se copia, así que sin `&` `main` nunca vería el incremento. Un arreglo se pasa como apuntador a su primer elemento, así que la función ya modifica el original. |
+| 6 | ¿Cómo hacer que mi `main` de prueba conviva con el `main.cpp` del equipo? | Usé mi `main` temporal solo en mi computadora. Antes del commit restauré el del equipo con `git restore src/main.cpp`. |
+
+## 8. Reflexión
+
+> Borrador: ajústalo con lo que de verdad aprendiste.
+
+**¿Qué aprendí?**
+
+Aprendí a guardar los datos de cada equipo en un registro y a juntar todos en un arreglo de `Equipo`, sin arreglos paralelos. También entendí la diferencia entre pasar un dato por valor, por referencia o como `const`: uso referencia solo cuando la función debe cambiar el dato original, como `total`, y `const` cuando solo lee. Además aprendí que `.size()` cuenta bytes y que por eso los acentos y la ñ requieren un tratamiento especial al validar cadenas, y que conviene que una función de validación devuelva la razón del rechazo en lugar de imprimirla.
+
+**¿Qué cambiaría de mi proceso?**
+
+Escribiría la receta antes de programar y compilaría después de cada función pequeña, para encontrar los errores de sintaxis de inmediato. También acordaría con el equipo desde el inicio qué campos lleva `Equipo` y cómo se arma `main.cpp`, para no pisar el trabajo de los demás en los archivos compartidos.
